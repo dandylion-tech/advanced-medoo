@@ -4,39 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97e956bfe04bd2a7438046b924306732",
+    "content-hash": "273ae4288abebb7a4c9a50ec43c93e37",
     "packages": [
-        {
-            "name": "amisoci/styleddump",
-            "version": "v1.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Amisoci/StyledDump.git",
-                "reference": "5f45b61be1926669cd6781dc511582a0a2e07016"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Amisoci/StyledDump/zipball/5f45b61be1926669cd6781dc511582a0a2e07016",
-                "reference": "5f45b61be1926669cd6781dc511582a0a2e07016",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Amisoci\\": "/src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "dump function to make variables readable",
-            "support": {
-                "issues": "https://github.com/Amisoci/StyledDump/issues",
-                "source": "https://github.com/Amisoci/StyledDump/tree/v1.2.2"
-            },
-            "time": "2023-07-07T12:41:33+00:00"
-        },
         {
             "name": "catfan/medoo",
             "version": "v2.1.10",

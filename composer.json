@@ -15,8 +15,7 @@
     ],
     "require": {
         "php": ">=8.0.0",
-        "catfan/medoo": "^2.1",
-        "amisoci/styleddump": "^1.2"
+        "catfan/medoo": "^2.1"
     },
     "autoload": {
         "psr-0": {
