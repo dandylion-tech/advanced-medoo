@@ -70,7 +70,11 @@
             $is_join = $this->isAdvancedJoin($join);
             $column_data = $is_join?$columns:$join;
             $column_data = $this->convertColumns($column_data);
-            $uid_list = $column_data["uid_list"];
+            if(isset($column_data["uid"])){
+                $uid_list = array($column_data["uid"]);
+            } else {
+                $uid_list = $column_data["uid_list"];
+            }
             $select = $column_data["select"];
             if($is_join){
                 $columns = $select;
@@ -83,7 +87,7 @@
                 $columns??null,
                 $where??null
             );
-            return reset($this->removeUIDs(array($results),$uid_list));
+            return $this->removeUIDs($results,$uid_list);
         }
         public function select(string $table, $join, $columns = null, $where = null): ?array{
     
@@ -93,7 +97,11 @@
             $column_data = $this->convertColumns($column_data);
     
     
-            $uid_list = $column_data["uid_list"];
+            if(isset($column_data["uid"])){
+                $uid_list = array($column_data["uid"]);
+            } else {
+                $uid_list = $column_data["uid_list"];
+            }
             $select = $column_data["select"];
     
     
