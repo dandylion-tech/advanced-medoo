@@ -87,7 +87,11 @@
                 $columns??null,
                 $where??null
             );
-            return $this->removeUIDs($results,$uid_list);
+            if(is_array($results)){
+                return $this->removeUIDs($results,$uid_list);
+            } else {
+                return $results;
+            }
         }
         public function select(string $table, $join, $columns = null, $where = null): ?array{
     
@@ -119,7 +123,11 @@
                 $where??null
             );
            
-            return $this->removeUIDs($results,$uid_list);
+            if(is_array($results)){
+                return $this->removeUIDs($results,$uid_list);
+            } else {
+                return $results;
+            }
         }
     }
 ?>
