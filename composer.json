@@ -1,0 +1,26 @@
+{
+    "name": "dandylion/advancedmedoo",
+    "type": "library",
+    "description": "Adds extra features to Medoo",
+    "keywords": [],
+    "homepage": "https://serverbook.app",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Codey Miller",
+            "email": "codey.miller@dandyliontech.co.uk",
+            "homepage": "https://serverbook.app",
+            "role": "CTO"
+        }
+    ],
+    "require": {
+        "php": ">=8.0.0",
+        "catfan/medoo": "^2.1",
+        "amisoci/styleddump": "^1.2"
+    },
+    "autoload": {
+        "psr-0": {
+            "Monolog": "src"
+        }
+    }
+}
