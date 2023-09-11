@@ -60,14 +60,35 @@
             }
             return $return_data;
         }
+        protected function isAdvancedJoin($join){
+            if(!is_array($join))return false;
+            $keys = array_keys($join);
+            return isset($keys[0])&&is_string($keys[0])&&strpos($keys[0], '[') === 0;
+        }
+        public function get(string $table, $join = null, $columns = null, $where = null)
+        {
+            $is_join = $this->isAdvancedJoin($join);
+            $column_data = $is_join?$columns:$join;
+            $column_data = $this->convertColumns($column_data);
+            $uid_list = $column_data["uid_list"];
+            $select = $column_data["select"];
+            if($is_join){
+                $columns = $select;
+            } else {
+                $join = $select;
+            }
+            $results = parent::get(
+                $table,
+                $join??null,
+                $columns??null,
+                $where??null
+            );
+            return reset($this->removeUIDs(array($results),$uid_list));
+        }
         public function select(string $table, $join, $columns = null, $where = null): ?array{
     
     
-            $is_join = is_array($join);
-            if(is_array($join)){
-                $keys = array_keys($join);
-                $is_join = isset($keys[0])&&is_string($keys[0])&&strpos($keys[0], '[') === 0;
-            }
+            $is_join = $this->isAdvancedJoin($join);
             $column_data = $is_join?$columns:$join;
             $column_data = $this->convertColumns($column_data);
     
