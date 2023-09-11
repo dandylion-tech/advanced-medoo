@@ -18,8 +18,8 @@
         "catfan/medoo": "^2.1"
     },
     "autoload": {
-        "psr-0": {
-            "Monolog": "src"
+        "psr-4": {
+            "Dandylion\\": "/src"
         }
     }
 }
