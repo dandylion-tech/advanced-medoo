@@ -12,7 +12,11 @@
                     if(is_string($key)){
                         $select[$key] = $column_info["select"];
                     } else {
-                        $select = array_merge($select,$column_info["select"]);
+                        if(is_array($column_info["select"])){
+                            $select = array_merge($select,$column_info["select"]);
+                        } else {
+                            $select[] = $column_info["select"];
+                        }
                     }
                     if(isset($column_info["uid"])){
                         $uid_list[] = $column_info["uid"];
