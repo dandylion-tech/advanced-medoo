@@ -60,14 +60,14 @@
             }
             return $return_data;
         }
-        protected function isAdvancedJoin($join){
+        protected function isJoin($join):bool{
             if(!is_array($join))return false;
             $keys = array_keys($join);
             return isset($keys[0])&&is_string($keys[0])&&strpos($keys[0], '[') === 0;
         }
         public function get(string $table, $join = null, $columns = null, $where = null)
         {
-            $is_join = $this->isAdvancedJoin($join);
+            $is_join = $this->isJoin($join);
             $column_data = $is_join?$columns:$join;
             $column_data = $this->convertColumns($column_data);
             if(isset($column_data["uid"])){
@@ -83,9 +83,9 @@
             }
             $results = parent::get(
                 $table,
-                $join??null,
-                $columns??null,
-                $where??null
+                $join,
+                $columns,
+                $where
             );
             if(is_array($results)){
                 return $this->removeUIDs($results,$uid_list);
@@ -96,7 +96,7 @@
         public function select(string $table, $join, $columns = null, $where = null): ?array{
     
     
-            $is_join = $this->isAdvancedJoin($join);
+            $is_join = $this->isJoin($join);
             $column_data = $is_join?$columns:$join;
             $column_data = $this->convertColumns($column_data);
     
@@ -119,8 +119,8 @@
             $results = parent::select(
                 $table,
                 $join,
-                $columns??null,
-                $where??null
+                $columns,
+                $where
             );
            
             if(is_array($results)){
@@ -128,6 +128,39 @@
             } else {
                 return $results;
             }
+        }
+        public function patch(string $table, $data, $unique_column_list){
+            if(is_string($unique_column_list))$unique_column_list = [$unique_column_list];
+            $where = [];
+            foreach($data as $index=>$row){
+                $and = [];
+                foreach($unique_column_list as $column){
+                    $and[$column] = $row[$column];
+                }
+                $where["AND #".$index] = $and;
+            }
+            $where = ["OR"=>$where];
+            $current_items = $this->select($table,array_merge(array_keys(reset($data)),array("unique"=>$unique_column_list)),$where);
+            $update_list = [];
+            $insert_list = [];
+            $unique_current_items = array_column($current_items,"unique");
+            array_walk($current_items,function(&$item){
+                unset($item["unique"]);
+            });
+            foreach($data as $row){
+                $unique_row = array_combine($unique_column_list,array_map(function($column) use($row){
+                    return $row[$column];
+                },$unique_column_list));
+                if(array_search($unique_row,$unique_current_items) !== false){
+                    if(array_search($row,$current_items) === false)
+                    $update_list[] = $row;
+                    $this->update($table,$row,$unique_row);
+                } else {
+                    $insert_list[] = $row;
+                }
+            }
+            if(count($insert_list))$this->insert($table,$insert_list);
+            return $this->select($table,"*",$where);
         }
     }
 ?>
