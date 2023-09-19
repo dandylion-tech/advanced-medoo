@@ -131,6 +131,7 @@
         }
         public function patch(string $table, $data, $unique_column_list){
             if(is_string($unique_column_list))$unique_column_list = [$unique_column_list];
+            if(!array_is_list($data))$data = [$data];
             $where = [];
             foreach($data as $index=>$row){
                 $and = [];
