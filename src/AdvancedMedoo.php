@@ -153,9 +153,10 @@
                     return $row[$column];
                 },$unique_column_list));
                 if(array_search($unique_row,$unique_current_items) !== false){
-                    if(array_search($row,$current_items) === false)
-                    $update_list[] = $row;
-                    $this->update($table,$row,$unique_row);
+                    if(array_search($row,$current_items) === false){
+                        $update_list[] = $row;
+                        $this->update($table,$row,$unique_row);
+                    }
                 } else {
                     $insert_list[] = $row;
                 }
