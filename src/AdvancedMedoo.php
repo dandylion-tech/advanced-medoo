@@ -108,6 +108,8 @@
             }
             $select = $column_data["select"];
     
+
+            $select = $this->similarity($select);
     
             if($is_join){
                 $columns = $select;
@@ -161,6 +163,24 @@
             }
             if(count($insert_list))$this->insert($table,$insert_list);
             return $this->select($table,"*",$where);
+        }
+        protected function similarity($select){
+            global $database;
+            foreach($select as $key=>$value){
+                if(preg_match("/^SIMILAR\((.+)\)$/",$key,$matches)){
+                    if(!is_array($value)||!array_is_list($value)){
+                        $value = array($value);
+                    }
+                    foreach($value as $column){
+                        preg_match("/^([^\)]+)(?: +\(([^\)]+)\))?$/",$column,$column_names);
+                        $select[$column_names[2]] = $database::raw("SIMILAR(:search,<".$column_names[1].">)",[":search"=>$matches[1]]);
+                    }
+                    unset($select[$key]);
+                } elseif(is_array($value)){
+                    $select[$key] = $this->similarity($value);
+                }
+            }
+            return $select;
         }
     }
 ?>
