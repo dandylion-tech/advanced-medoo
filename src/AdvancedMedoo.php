@@ -133,6 +133,7 @@
         }
         public function patch(string $table, $data, $unique_column_list){
             if(is_string($unique_column_list))$unique_column_list = [$unique_column_list];
+            if(!array_is_list($data))$data = [$data];
             $where = [];
             foreach($data as $index=>$row){
                 $and = [];
@@ -154,9 +155,10 @@
                     return $row[$column];
                 },$unique_column_list));
                 if(array_search($unique_row,$unique_current_items) !== false){
-                    if(array_search($row,$current_items) === false)
-                    $update_list[] = $row;
-                    $this->update($table,$row,$unique_row);
+                    if(array_search($row,$current_items) === false){
+                        $update_list[] = $row;
+                        $this->update($table,$row,$unique_row);
+                    }
                 } else {
                     $insert_list[] = $row;
                 }
