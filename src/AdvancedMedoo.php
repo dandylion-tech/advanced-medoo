@@ -166,6 +166,23 @@
             if(count($insert_list))$this->insert($table,$insert_list);
             return $this->select($table,"*",$where);
         }
+        public function sync(string $table, $data, $unique_column_list){
+            if(is_string($unique_column_list))$unique_column_list = [$unique_column_list];
+            if(!array_is_list($data))$data = [$data];
+            $where = [];
+            foreach($data as $index=>$row){
+                $and = [];
+                foreach($unique_column_list as $column){
+                    $and[$column."[!]"] = $row[$column];
+                }
+                $where["OR #".$index] = $and;
+            }
+            $where = ["AND"=>$where];
+            $deleted_rows = $this->select($table,"*",$where);
+            parent::delete($table,$where);
+            $this->patch($table,$data,$unique_column_list);
+            return $deleted_rows;
+        }
         protected function similarity($select){
             global $database;
             foreach($select as $key=>$value){
