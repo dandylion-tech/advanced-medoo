@@ -2,6 +2,9 @@
     namespace Dandylion;
     use Medoo\Medoo;
     class AdvancedMedoo extends Medoo{
+        public static $deleted;
+        public static $inserted;
+        public static $updated;
         private function convertColumns($columns){
             $column_data = array();
             if(is_array($columns)){
@@ -65,8 +68,7 @@
             $keys = array_keys($join);
             return isset($keys[0])&&is_string($keys[0])&&strpos($keys[0], '[') === 0;
         }
-        public function get(string $table, $join = null, $columns = null, $where = null)
-        {
+        public function get(string $table, $join = null, $columns = null, $where = null){
             $is_join = $this->isJoin($join);
             $column_data = $is_join?$columns:$join;
             $column_data = $this->convertColumns($column_data);
@@ -164,7 +166,15 @@
                 }
             }
             if(count($insert_list))$this->insert($table,$insert_list);
-            return $this->select($table,"*",$where);
+            self::$inserted = $insert_list;
+            self::$updated = $update_list;
+            self::$deleted = array();
+        }
+        public function delete(string $table,$where): ?\PDOStatement{
+            self::$deleted = self::select($table,$where);
+            self::$updated = array();
+            self::$inserted = array();
+            return parent::delete($table,$where);
         }
         public function sync(string $table, $data, $unique_column_list){
             if(is_string($unique_column_list))$unique_column_list = [$unique_column_list];
@@ -178,10 +188,10 @@
                 $where["OR #".$index] = $and;
             }
             $where = ["AND"=>$where];
-            $deleted_rows = $this->select($table,"*",$where);
+            $deleted_items = $this->select($table,"*",$where);
             parent::delete($table,$where);
             $this->patch($table,$data,$unique_column_list);
-            return $deleted_rows;
+            self::$deleted = $deleted_items;
         }
         protected function similarity($select){
             global $database;
@@ -200,6 +210,13 @@
                 }
             }
             return $select;
+        }
+        public function replace(string $table, array $columns, $where = null): ?\PDOStatement{
+            $return = parent::replace($table,$columns,$where);
+            self::$updated = $this->select($table,$where);
+            self::$deleted = array();
+            self::$inserted = array();
+            return $return;
         }
     }
 ?>
