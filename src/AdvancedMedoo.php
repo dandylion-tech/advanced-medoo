@@ -218,5 +218,12 @@
             self::$inserted = array();
             return $return;
         }
+        public function insert(string $table, array $values, string $primaryKey = null): ?\PDOStatement{
+            self::$deleted = array();
+            self::$updated = array();
+            $inserted_data = parent::insert($table,$values,$primaryKey);
+            self::$inserted = $this->select($table,"*",["id"=>parent::id()]);
+            return $inserted_data;
+        }
     }
 ?>
