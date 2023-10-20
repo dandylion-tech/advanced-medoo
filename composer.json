@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": ">=8.0.0",
-        "catfan/medoo": "^2.1"
+        "dandylion/medoo": "^1"
     },
     "autoload": {
         "psr-4": {

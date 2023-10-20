@@ -1,6 +1,6 @@
 <?php
     namespace Dandylion;
-    use Medoo\Medoo;
+    use Dandylion\Medoo;
     class AdvancedMedoo extends Medoo{
         public static $deleted;
         public static $inserted;

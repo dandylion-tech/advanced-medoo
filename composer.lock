@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "273ae4288abebb7a4c9a50ec43c93e37",
+    "content-hash": "ce9769012290eaae9082ce8426f0279e",
     "packages": [
         {
-            "name": "catfan/medoo",
-            "version": "v2.1.10",
+            "name": "dandylion/medoo",
+            "version": "v1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/catfan/Medoo.git",
-                "reference": "eb1ad19d127bd358b9a44abc60166b4a2c19a988"
+                "url": "https://github.com/dandylion-tech/medoo.git",
+                "reference": "66d19ccf6aaaf30141f31abdcafd3f7bb2dbe065"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/catfan/Medoo/zipball/eb1ad19d127bd358b9a44abc60166b4a2c19a988",
-                "reference": "eb1ad19d127bd358b9a44abc60166b4a2c19a988",
+                "url": "https://api.github.com/repos/dandylion-tech/medoo/zipball/66d19ccf6aaaf30141f31abdcafd3f7bb2dbe065",
+                "reference": "66d19ccf6aaaf30141f31abdcafd3f7bb2dbe065",
                 "shasum": ""
             },
             "require": {
@@ -80,7 +80,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2023-06-10T07:54:55+00:00"
+            "time": "2023-10-20T12:33:23+00:00"
         }
     ],
     "packages-dev": [],
