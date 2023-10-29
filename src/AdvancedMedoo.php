@@ -2,9 +2,6 @@
     namespace Dandylion;
     use Dandylion\Medoo;
     class AdvancedMedoo extends Medoo{
-        public static $deleted;
-        public static $inserted;
-        public static $updated;
         private function convertColumns($columns){
             $column_data = array();
             if(is_array($columns)){
@@ -166,14 +163,8 @@
                 }
             }
             if(count($insert_list))$this->insert($table,$insert_list);
-            self::$inserted = $insert_list;
-            self::$updated = $update_list;
-            self::$deleted = array();
         }
         public function delete(string $table,$where): ?\PDOStatement{
-            self::$deleted = self::select($table,$where);
-            self::$updated = array();
-            self::$inserted = array();
             return parent::delete($table,$where);
         }
         public function sync(string $table, $data, $unique_column_list){
@@ -188,10 +179,8 @@
                 $where["OR #".$index] = $and;
             }
             $where = ["AND"=>$where];
-            $deleted_items = $this->select($table,"*",$where);
             parent::delete($table,$where);
             $this->patch($table,$data,$unique_column_list);
-            self::$deleted = $deleted_items;
         }
         protected function similarity($select){
             global $database;
@@ -213,16 +202,10 @@
         }
         public function replace(string $table, array $columns, $where = null): ?\PDOStatement{
             $return = parent::replace($table,$columns,$where);
-            self::$updated = $this->select($table,$where);
-            self::$deleted = array();
-            self::$inserted = array();
             return $return;
         }
         public function insert(string $table, array $values, string $primaryKey = null): ?\PDOStatement{
-            self::$deleted = array();
-            self::$updated = array();
             $inserted_data = parent::insert($table,$values,$primaryKey);
-            self::$inserted = $this->select($table,"*",["id"=>parent::id()]);
             return $inserted_data;
         }
     }

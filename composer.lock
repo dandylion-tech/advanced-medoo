@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce9769012290eaae9082ce8426f0279e",
+    "content-hash": "67921465b05ef7d7bcb8003dc793bbc6",
     "packages": [
         {
             "name": "dandylion/medoo",
-            "version": "v1",
+            "version": "v1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dandylion-tech/medoo.git",
-                "reference": "66d19ccf6aaaf30141f31abdcafd3f7bb2dbe065"
+                "reference": "2194fd94c74be0c25e2759d95c1ecd22f9e244b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dandylion-tech/medoo/zipball/66d19ccf6aaaf30141f31abdcafd3f7bb2dbe065",
-                "reference": "66d19ccf6aaaf30141f31abdcafd3f7bb2dbe065",
+                "url": "https://api.github.com/repos/dandylion-tech/medoo/zipball/2194fd94c74be0c25e2759d95c1ecd22f9e244b5",
+                "reference": "2194fd94c74be0c25e2759d95c1ecd22f9e244b5",
                 "shasum": ""
             },
             "require": {
@@ -38,7 +38,7 @@
             "type": "framework",
             "autoload": {
                 "psr-4": {
-                    "Medoo\\": "src/"
+                    "Dandylion\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -80,7 +80,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2023-10-20T12:33:23+00:00"
+            "time": "2023-10-20T13:41:44+00:00"
         }
     ],
     "packages-dev": [],
